@@ -1,0 +1,686 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <title>Suits Temalı Çarpım Tablosu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        :root {
+            --bg1: #0f2027;
+            --bg2: #203a43;
+            --bg3: #2c5364;
+            --gold: #e0c097;
+            --gold2: #caa16b;
+            --white: #ffffff;
+            --grey: #c9d1d9;
+            --danger: #ff6b6b;
+            --success: #21c07a;
+            --accent: #4db6ff;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+            background: linear-gradient(120deg, var(--bg1), var(--bg2), var(--bg3));
+            color: var(--white);
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: rgba(15,32,39,.75);
+            backdrop-filter: blur(6px);
+            border-bottom: 1px solid rgba(224,192,151,.25);
+        }
+
+        .nav {
+            max-width: 1100px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 14px 20px;
+        }
+
+        .brand {
+            font-weight: 700;
+            letter-spacing: .6px;
+            color: var(--gold);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+            .brand .badge {
+                border: 1px solid var(--gold);
+                padding: 2px 8px;
+                border-radius: 999px;
+                font-size: 12px;
+            }
+
+        .nav a {
+            color: var(--grey);
+            text-decoration: none;
+            padding: 8px 10px;
+            border-radius: 8px;
+        }
+
+            .nav a.active {
+                color: var(--white);
+                background: rgba(255,255,255,.08);
+            }
+
+        .container {
+            max-width: 1100px;
+            margin: 24px auto;
+            padding: 0 20px;
+        }
+
+        .panel {
+            background: rgba(255,255,255,.06);
+            border: 1px solid rgba(224,192,151,.25);
+            border-radius: 14px;
+            padding: 18px;
+            box-shadow: 0 10px 30px rgba(0,0,0,.35);
+            margin-bottom: 22px;
+        }
+
+        h1 {
+            margin: 0 0 10px;
+            color: var(--gold);
+            font-size: 28px;
+        }
+
+        h2 {
+            margin: 6px 0 10px;
+            color: var(--gold2);
+            font-size: 22px;
+        }
+
+        p {
+            color: var(--grey);
+            line-height: 1.6;
+        }
+
+        .grid {
+            display: grid;
+            gap: 16px;
+        }
+
+        @media(min-width:900px) {
+            .grid {
+                grid-template-columns: 1.2fr .8fr;
+            }
+        }
+
+        /* Tips */
+        .tip {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            background: rgba(77,182,255,.12);
+            border: 1px dashed rgba(77,182,255,.35);
+            padding: 10px;
+            border-radius: 10px;
+            color: #cfeaff;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+
+        select, input[type="number"] {
+            background: rgba(255,255,255,.1);
+            color: var(--white);
+            border: 1px solid rgba(224,192,151,.3);
+            border-radius: 8px;
+            padding: 8px 10px;
+        }
+
+        .btn {
+            background: linear-gradient(120deg, #1e2e3a, #283f4d);
+            color: var(--white);
+            border: 1px solid rgba(224,192,151,.3);
+            padding: 10px 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+            .btn:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 6px 16px rgba(0,0,0,.3);
+            }
+
+            .btn.gold {
+                background: linear-gradient(120deg, #3a2a15, #5c401c);
+                border-color: var(--gold2);
+            }
+
+            .btn.danger {
+                background: linear-gradient(120deg, #561a1a, #8b2f2f);
+                border-color: #ff9d9d;
+            }
+
+            .btn.success {
+                background: linear-gradient(120deg, #163a2a, #206443);
+                border-color: #36da9a;
+            }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            border: 1px solid rgba(224,192,151,.25);
+            padding: 10px;
+            text-align: center;
+        }
+
+        td {
+            color: #fff;
+        }
+
+            td:hover {
+                background: rgba(224,192,151,.15);
+            }
+
+        /* Practice card */
+        .card {
+            background: rgba(255,255,255,.05);
+            border: 1px solid rgba(224,192,151,.25);
+            border-radius: 14px;
+            padding: 16px;
+        }
+
+        .question {
+            font-size: 28px;
+            text-align: center;
+            margin: 6px 0 12px;
+        }
+
+        .answer-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        input[type="text"] {
+            padding: 12px 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(224,192,151,.25);
+            background: rgba(255,255,255,.08);
+            color: var(--white);
+            width: 160px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .status {
+            text-align: center;
+            min-height: 26px;
+            margin-top: 8px;
+        }
+
+            .status.ok {
+                color: var(--success);
+            }
+
+            .status.no {
+                color: var(--danger);
+            }
+
+        /* Stats */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .stat {
+            background: rgba(255,255,255,.05);
+            border: 1px solid rgba(224,192,151,.25);
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .progress-wrap {
+            margin-top: 10px;
+        }
+
+        .progress {
+            height: 10px;
+            background: rgba(255,255,255,.1);
+            border: 1px solid rgba(224,192,151,.25);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--gold2), var(--accent));
+            transition: width .2s;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            color: #aab7c4;
+            padding: 20px;
+        }
+
+        /* Mini quotes */
+        .quote {
+            font-style: italic;
+            color: #d8c9b0;
+            text-align: center;
+            margin: 8px 0 4px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="nav">
+            <div class="brand">Suits Math <span class="badge">Harvey approved</span></div>
+            <a href="#dersler" class="active">Dersler</a>
+            <a href="#pratik">Pratik</a>
+            <a href="#quiz">Quiz</a>
+            <a href="#istatistik">İstatistik</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <div id="dersler" class="panel">
+            <h1>Çarpım tablosu — Suits temasıyla güçlü bir öğrenme</h1>
+            <p>Hedef basit: hızlı, doğru ve kendinden emin. Harvey Specter ne der? “Kazanmak için oynarım.” Çarpım tablosunda kazanmak için bu üç taktiği kullan.</p>
+            <div class="grid">
+                <div class="card">
+                    <h2>Temel mantık</h2>
+                    <ul>
+                        <li><strong>Değişme özelliği:</strong> 6×7 ve 7×6 aynıdır. Zor olanı kolayına çevir.</li>
+                        <li><strong>10’lar kuralı:</strong> 10×n → sonuna 0 ekle. 10×8=80, 10×12=120.</li>
+                        <li><strong>5’ler ritmi:</strong> Sonu 0 veya 5 olur. 5×9=45, 5×12=60.</li>
+                        <li><strong>9 hilesi:</strong> 9×n → sonuç basamakları toplamı 9’dur (9×7=63 → 6+3=9).</li>
+                        <li><strong>Dağılma:</strong> 7×8 → 7×(5+3)=35+21=56. Parçala, kazan.</li>
+                    </ul>
+                    <div class="tip">
+                        <div>💼</div>
+                        <div><strong>Harvey ipucu:</strong> Zor soruyu güçlü yönteme çevir. 8×7’de takılırsan 7×8’e dön, ya da 7×(4+4) yap.</div>
+                    </div>
+                </div>
+                <div>
+                    <h2>Çarpım tablosu (1–10)</h2>
+                    <table id="mulTable"></table>
+                </div>
+            </div>
+        </div>
+
+        <div id="pratik" class="panel">
+            <h1>Pratik modu</h1>
+            <p>Hızını ve doğruluğunu artır. Zorluk, süre ve hedefleri ayarla; Suits’e yakışır bir performans çıkar.</p>
+            <div class="controls">
+                <label>
+                    <strong>Zorluk:</strong>
+                    <select id="difficulty">
+                        <option value="easy">Kolay (1–5)</option>
+                        <option value="medium">Orta (1–10)</option>
+                        <option value="hard">Zor (1–12)</option>
+                    </select>
+                </label>
+                <label>
+                    <strong>Süre:</strong>
+                    <select id="duration">
+                        <option value="60">60 sn</option>
+                        <option value="90">90 sn</option>
+                        <option value="120" selected>120 sn</option>
+                    </select>
+                </label>
+                <label>
+                    <strong>Hedef doğru:</strong>
+                    <input id="goal" type="number" min="5" max="100" value="20" />
+                </label>
+                <button class="btn gold" id="startPractice">Başlat</button>
+                <button class="btn danger" id="stopPractice">Bitir</button>
+            </div>
+
+            <div class="card" id="practiceCard" style="margin-top:12px; display:none;">
+                <div class="quote">“Kazananlar bahane üretmez; çözüm üretir.” — Harvey</div>
+                <div class="question" id="qText">Soru</div>
+                <div class="answer-row">
+                    <input id="answer" type="text" placeholder="Cevap" autocomplete="off" />
+                    <button class="btn success" id="submit">Gönder</button>
+                </div>
+                <div class="status" id="status"></div>
+                <div class="stats">
+                    <div class="stat"><strong>Doğru:</strong> <span id="sCorrect">0</span></div>
+                    <div class="stat"><strong>Yanlış:</strong> <span id="sWrong">0</span></div>
+                    <div class="stat"><strong>Seri:</strong> <span id="sStreak">0</span></div>
+                </div>
+                <div class="progress-wrap">
+                    <div style="display:flex; justify-content:space-between; color:#aab7c4;">
+                        <span><strong>Kalan süre:</strong> <span id="timeLeft">0</span> sn</span>
+                        <span><strong>Hedef:</strong> <span id="goalLeft">20</span></span>
+                    </div>
+                    <div class="progress"><div class="bar" id="timeBar"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="quiz" class="panel">
+            <h1>Quiz modu (10 soru)</h1>
+            <p>Mike Ross tarzı netlik: 10 soruda doğruluğunu ölç. Sonuçlarda hangi çarpımlarda zorlandığını gör.</p>
+            <div class="controls">
+                <label>
+                    <strong>Aralık:</strong>
+                    <select id="quizRange">
+                        <option value="10">1–10</option>
+                        <option value="12" selected>1–12</option>
+                        <option value="15">1–15</option>
+                    </select>
+                </label>
+                <button class="btn gold" id="startQuiz">Quiz başlat</button>
+            </div>
+
+            <div class="card" id="quizCard" style="margin-top:12px; display:none;">
+                <div class="question" id="quizQ">Soru</div>
+                <div class="answer-row">
+                    <input id="quizA" type="text" placeholder="Cevap" />
+                    <button class="btn success" id="quizSubmit">Gönder</button>
+                </div>
+                <div class="status" id="quizStatus"></div>
+                <div style="text-align:center; color:#aab7c4;">
+                    <strong>Soru:</strong> <span id="quizIndex">1</span>/10
+                </div>
+            </div>
+
+            <div class="card" id="quizResult" style="display:none;">
+                <h2>Sonuç analizi</h2>
+                <p><strong>Doğru:</strong> <span id="qrCorrect">0</span> — <strong>Yanlış:</strong> <span id="qrWrong">0</span> — <strong>Doğruluk:</strong> <span id="qrAcc">0%</span></p>
+                <div id="qrList"></div>
+            </div>
+        </div>
+
+        <div id="istatistik" class="panel">
+            <h1>İstatistik ve ilerleme</h1>
+            <p>İlerlemeni yerel olarak kaydediyoruz. Günlük doğruların, en iyi serin, toplam pratik süren burada.</p>
+            <div class="stats">
+                <div class="stat"><strong>Toplam doğru:</strong> <span id="tCorrect">0</span></div>
+                <div class="stat"><strong>Toplam yanlış:</strong> <span id="tWrong">0</span></div>
+                <div class="stat"><strong>En iyi seri:</strong> <span id="tBest">0</span></div>
+            </div>
+            <div class="controls" style="margin-top:12px;">
+                <button class="btn" id="exportBtn">İlerlemeyi dışa aktar (JSON)</button>
+                <button class="btn danger" id="clearBtn">Tüm ilerlemeyi temizle</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        Powered by Suits — “Bir anlaşma yapılacaksa, masada sen ol.” Öğrenmeye devam et.
+    </footer>
+
+    <script>// Basit veri deposu
+    const store = {
+      key: "suits-math-progress",
+      get(){
+        const raw = localStorage.getItem(this.key);
+        return raw ? JSON.parse(raw) : { totalCorrect:0, totalWrong:0, bestStreak:0 };
+      },
+      set(data){ localStorage.setItem(this.key, JSON.stringify(data)); },
+      clear(){ localStorage.removeItem(this.key); }
+    };
+
+    // Çarpım tablosu çiz
+    function renderMulTable(){
+      const t = document.getElementById("mulTable");
+      t.innerHTML = "";
+      const size = 10;
+      const thead = document.createElement("thead");
+      const hr = document.createElement("tr");
+      hr.appendChild(document.createElement("th"));
+      for(let j=1;j<=size;j++){
+        const th = document.createElement("th"); th.textContent = j; hr.appendChild(th);
+      }
+      thead.appendChild(hr); t.appendChild(thead);
+      const tbody = document.createElement("tbody");
+      for(let i=1;i<=size;i++){
+        const tr = document.createElement("tr");
+        const th = document.createElement("th"); th.textContent = i; tr.appendChild(th);
+        for(let j=1;j<=size;j++){
+          const td = document.createElement("td");
+          td.textContent = i*j;
+          td.title = `${i} × ${j} = ${i*j}`;
+          tr.appendChild(td);
+        }
+        tbody.appendChild(tr);
+      }
+      t.appendChild(tbody);
+    }
+
+    // Rastgele soru üretici
+    function randInt(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+    function nextRange(diff){
+      if(diff==="easy") return [1,5];
+      if(diff==="hard") return [1,12];
+      return [1,10];
+    }
+
+    // Pratik modu
+    const difficulty = document.getElementById("difficulty");
+    const duration = document.getElementById("duration");
+    const goal = document.getElementById("goal");
+    const startPractice = document.getElementById("startPractice");
+    const stopPractice = document.getElementById("stopPractice");
+    const practiceCard = document.getElementById("practiceCard");
+    const qText = document.getElementById("qText");
+    const ans = document.getElementById("answer");
+    const submit = document.getElementById("submit");
+    const sCorrect = document.getElementById("sCorrect");
+    const sWrong = document.getElementById("sWrong");
+    const sStreak = document.getElementById("sStreak");
+    const timeLeft = document.getElementById("timeLeft");
+    const goalLeft = document.getElementById("goalLeft");
+    const timeBar = document.getElementById("timeBar");
+    const statusEl = document.getElementById("status");
+
+    let pracTimer=null, pracEnd=0, curA=1, curB=1, correct=0, wrong=0, streak=0, target=20;
+
+    function newQuestion(){
+      const [min,max] = nextRange(difficulty.value);
+      curA = randInt(min,max); curB = randInt(min,max);
+      qText.textContent = `${curA} × ${curB} = ?`;
+      ans.value=""; ans.focus();
+      statusEl.textContent="";
+      statusEl.className="status";
+    }
+
+    function endPractice(reason="Bitti"){
+      clearInterval(pracTimer); pracTimer=null;
+      practiceCard.style.display="none";
+      statusEl.textContent="";
+      // ilerlemeyi kaydet
+      const data = store.get();
+      data.totalCorrect += correct;
+      data.totalWrong += wrong;
+      if(streak > data.bestStreak) data.bestStreak = streak;
+      store.set(data);
+      refreshProgress();
+      alert(`Pratik ${reason}.\nDoğru: ${correct} | Yanlış: ${wrong} | En iyi seri: ${streak}`);
+    }
+
+    startPractice.addEventListener("click", ()=>{
+      correct=0; wrong=0; streak=0;
+      target = Math.max(5, Math.min(100, Number(goal.value)||20));
+      goalLeft.textContent = target;
+      const dur = Number(duration.value);
+      const start = Date.now();
+      pracEnd = start + dur*1000;
+      timeLeft.textContent = dur;
+      timeBar.style.width = "100%";
+      practiceCard.style.display="block";
+      newQuestion();
+      pracTimer = setInterval(()=>{
+        const now = Date.now();
+        const remain = Math.max(0, Math.ceil((pracEnd-now)/1000));
+        timeLeft.textContent = remain;
+        const perc = Math.max(0, Math.min(100, 100*((pracEnd-now)/(dur*1000))));
+        timeBar.style.width = `${perc}%`;
+        if(remain<=0) endPractice("süre doldu");
+      },200);
+    });
+
+    stopPractice.addEventListener("click", ()=> endPractice("erken bitirildi"));
+
+    submit.addEventListener("click", ()=>{
+      const user = Number(ans.value);
+      const real = curA*curB;
+      if(user===real){
+        correct++; streak++; statusEl.textContent="Doğru! Güzel hamle."; statusEl.className="status ok";
+        goalLeft.textContent = Math.max(0, target - correct);
+        if(correct>=target){ endPractice("hedefe ulaşıldı"); return; }
+        newQuestion();
+      }else{
+        wrong++; streak=0; statusEl.textContent=`Yanlış. Doğru: ${real}. İpucu: ${curA}×${curB} = ${curA}×(${Math.floor(curB/2)}+${Math.ceil(curB/2)})`; statusEl.className="status no";
+      }
+      sCorrect.textContent = correct;
+      sWrong.textContent = wrong;
+      sStreak.textContent = streak;
+    });
+
+    // Quiz modu
+    const startQuiz = document.getElementById("startQuiz");
+    const quizRange = document.getElementById("quizRange");
+    const quizCard = document.getElementById("quizCard");
+    const quizQ = document.getElementById("quizQ");
+    const quizA = document.getElementById("quizA");
+    const quizSubmit = document.getElementById("quizSubmit");
+    const quizStatus = document.getElementById("quizStatus");
+    const quizIndex = document.getElementById("quizIndex");
+    const quizResult = document.getElementById("quizResult");
+    const qrCorrect = document.getElementById("qrCorrect");
+    const qrWrong = document.getElementById("qrWrong");
+    const qrAcc = document.getElementById("qrAcc");
+    const qrList = document.getElementById("qrList");
+
+    let quizArr=[], qi=0, qc=0, qw=0;
+
+    function buildQuiz(){
+      const max = Number(quizRange.value);
+      quizArr = [];
+      for(let i=0;i<10;i++){
+        quizArr.push([randInt(1,max), randInt(1,max)]);
+      }
+      qi=0; qc=0; qw=0;
+    }
+    function showQuizQ(){
+      const [a,b] = quizArr[qi];
+      quizQ.textContent = `${a} × ${b} = ?`;
+      quizA.value=""; quizA.focus();
+      quizStatus.textContent="";
+      quizIndex.textContent = (qi+1);
+    }
+
+    startQuiz.addEventListener("click", ()=>{
+      buildQuiz();
+      quizCard.style.display="block";
+      quizResult.style.display="none";
+      showQuizQ();
+    });
+
+    quizSubmit.addEventListener("click", ()=>{
+      const [a,b] = quizArr[qi];
+      const real = a*b;
+      const user = Number(quizA.value);
+      const ok = user===real;
+      if(ok){ qc++; quizStatus.textContent="Doğru!"; quizStatus.className="status ok"; }
+      else { qw++; quizStatus.textContent=`Yanlış. Doğru: ${real}`; quizStatus.className="status no"; }
+      qi++;
+      if(qi>=10){
+        quizCard.style.display="none";
+        quizResult.style.display="block";
+        const acc = Math.round((qc/10)*100);
+        qrCorrect.textContent = qc;
+        qrWrong.textContent = qw;
+        qrAcc.textContent = acc+"%";
+        // detay listesi
+        qrList.innerHTML = "";
+        const ul = document.createElement("ul");
+        for(let i=0;i<10;i++){
+          const [aa,bb] = quizArr[i];
+          const item = document.createElement("li");
+          item.style.margin="6px 0";
+          item.textContent = `${aa}×${bb} = ${aa*bb}`;
+          ul.appendChild(item);
+        }
+        qrList.appendChild(ul);
+        // ilerleme güncelle
+        const data = store.get();
+        data.totalCorrect += qc;
+        data.totalWrong += qw;
+        if(qc > data.bestStreak) data.bestStreak = qc; // quiz serisini en iyi seri olarak say
+        store.set(data);
+        refreshProgress();
+      }else{
+        showQuizQ();
+      }
+    });
+
+    // İstatistik
+    const tCorrect = document.getElementById("tCorrect");
+    const tWrong = document.getElementById("tWrong");
+    const tBest = document.getElementById("tBest");
+    const exportBtn = document.getElementById("exportBtn");
+    const clearBtn = document.getElementById("clearBtn");
+
+    function refreshProgress(){
+      const d = store.get();
+      tCorrect.textContent = d.totalCorrect;
+      tWrong.textContent = d.totalWrong;
+      tBest.textContent = d.bestStreak;
+    }
+    exportBtn.addEventListener('click', () => {
+      const data = store.get();
+      const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'ilerleme.json';
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(a.href), 3000);
+    });
+    clearBtn.addEventListener('click', () => {
+      if(confirm("Tüm ilerlemeyi temizlemek istediğinden emin misin?")){
+        store.clear(); refreshProgress();
+      }
+    });
+
+    // Navigation active state
+    function setActive(){
+      const hash = location.hash || "#dersler";
+      document.querySelectorAll(".nav a").forEach(a=>{
+        a.classList.toggle("active", a.getAttribute("href")===hash);
+      });
+    }
+    window.addEventListener("hashchange", setActive);
+
+    // Başlangıç
+    renderMulTable();
+    refreshProgress();
+    setActive();</script>
+</body>
+</html>
